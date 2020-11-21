@@ -49,9 +49,9 @@ openApiGenerate {
     // https://github.com/OpenAPITools/openapi-generator/blob/master/docs/generators/kotlin-spring.md
     generatorName.set("kotlin")
     inputSpec.set("$rootDir/reference/Sleeper.v1.yaml")
-    outputDir.set("$rootDir/src/main/kotlin/com/cberry/sleeper/generated/")
+    outputDir.set("$rootDir")
 
-    configOptions.put("packageName", "com.cberry.sleeper.generated/")
+    configOptions.put("packageName", "com.cberry.sleeper.generated.client")
 }
 
 //
