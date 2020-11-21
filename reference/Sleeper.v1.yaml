@@ -8,16 +8,20 @@ info:
     email: rjbcc58@gmail.com
 servers:
   - url: 'https://api.sleeper.app'
-    description: Local Host
+    description: Sleeper App
 tags:
   - name: Sleeper
     description: Sleeper API
+  - name: User
+    description: Sleeper Users
+  - name: League
+    description: Sleeper Leagues
 paths:
   '/v1/user/{username}':
     get:
       summary: Your GET endpoint
       tags:
-        - Sleeper
+        - User
       responses:
         '200':
           description: OK
@@ -33,6 +37,80 @@ paths:
         name: username
         in: path
         required: true
+  '/v1/user/{user_id}/leagues/{sport}/{season}':
+    parameters:
+      - schema:
+          type: string
+        name: user_id
+        in: path
+        required: true
+        description: User
+      - schema:
+          type: string
+        name: sport
+        in: path
+        required: true
+        description: Always NFL
+      - schema:
+          type: string
+        name: season
+        in: path
+        required: true
+        description: Year
+    get:
+      summary: Get users leagues
+      tags:
+        - User
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/League'
+      operationId: get-leagues
+      description: Get leagues for given user by sport and year
+  '/v1/league/{league_id}':
+    parameters:
+      - schema:
+          type: string
+        name: league_id
+        in: path
+        required: true
+        description: The id of the league
+    get:
+      summary: Your GET endpoint
+      tags:
+        - League
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/League'
+      operationId: get-league
+      description: Get a specific league
+  '/v1/league/{league_id}/rosters':
+    parameters:
+      - schema:
+          type: string
+        name: league_id
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags:
+        - League
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Roster'
+      operationId: get-rosters
+      description: 'Gets all the rosters in the given league '
 components:
   schemas:
     User:
@@ -77,3 +155,597 @@ components:
         - is_bot
         - display_name
         - avatar
+    League:
+      description: ''
+      type: object
+      properties:
+        total_rosters:
+          type: number
+        status:
+          type: string
+          minLength: 1
+        sport:
+          type: string
+          minLength: 1
+        shard:
+          type: number
+        settings:
+          type: object
+          required:
+            - max_keepers
+            - draft_rounds
+            - trade_review_days
+            - reserve_allow_dnr
+            - capacity_override
+            - pick_trading
+            - taxi_years
+            - taxi_allow_vets
+            - last_report
+            - disable_adds
+            - waiver_type
+            - bench_lock
+            - reserve_allow_sus
+            - type
+            - reserve_allow_cov
+            - waiver_clear_days
+            - daily_waivers_last_ran
+            - waiver_day_of_week
+            - start_week
+            - playoff_teams
+            - num_teams
+            - reserve_slots
+            - playoff_round_type
+            - daily_waivers_hour
+            - waiver_budget
+            - reserve_allow_out
+            - offseason_adds
+            - last_scored_leg
+            - playoff_seed_type
+            - daily_waivers
+            - playoff_week_start
+            - daily_waivers_days
+            - league_average_match
+            - leg
+            - trade_deadline
+            - reserve_allow_doubtful
+            - taxi_deadline
+            - reserve_allow_na
+            - taxi_slots
+            - playoff_type
+          properties:
+            max_keepers:
+              type: number
+            draft_rounds:
+              type: number
+            trade_review_days:
+              type: number
+            reserve_allow_dnr:
+              type: number
+            capacity_override:
+              type: number
+            pick_trading:
+              type: number
+            taxi_years:
+              type: number
+            taxi_allow_vets:
+              type: number
+            last_report:
+              type: number
+            disable_adds:
+              type: number
+            waiver_type:
+              type: number
+            bench_lock:
+              type: number
+            reserve_allow_sus:
+              type: number
+            type:
+              type: number
+            reserve_allow_cov:
+              type: number
+            waiver_clear_days:
+              type: number
+            daily_waivers_last_ran:
+              type: number
+            waiver_day_of_week:
+              type: number
+            start_week:
+              type: number
+            playoff_teams:
+              type: number
+            num_teams:
+              type: number
+            reserve_slots:
+              type: number
+            playoff_round_type:
+              type: number
+            daily_waivers_hour:
+              type: number
+            waiver_budget:
+              type: number
+            reserve_allow_out:
+              type: number
+            offseason_adds:
+              type: number
+            last_scored_leg:
+              type: number
+            playoff_seed_type:
+              type: number
+            daily_waivers:
+              type: number
+            playoff_week_start:
+              type: number
+            daily_waivers_days:
+              type: number
+            league_average_match:
+              type: number
+            leg:
+              type: number
+            trade_deadline:
+              type: number
+            reserve_allow_doubtful:
+              type: number
+            taxi_deadline:
+              type: number
+            reserve_allow_na:
+              type: number
+            taxi_slots:
+              type: number
+            playoff_type:
+              type: number
+        season_type:
+          type: string
+          minLength: 1
+        season:
+          type: string
+          minLength: 1
+        scoring_settings:
+          type: object
+          required:
+            - yds_allow_400_449
+            - yds_allow_550p
+            - yds_allow_100_199
+            - pass_2pt
+            - pass_int
+            - fgmiss
+            - rec_yd
+            - idp_safe
+            - xpmiss
+            - fgm_30_39
+            - yds_allow_450_499
+            - blk_kick
+            - pts_allow_7_13
+            - fgm_20_29
+            - fgm_40_49
+            - pts_allow_1_6
+            - yds_allow_300_349
+            - yds_allow_500_549
+            - def_st_ff
+            - yds_allow_0_100
+            - yds_allow_350_399
+            - pts_allow_28_34
+            - idp_blk_kick
+            - idp_int
+            - fgm_50p
+            - fum_rec
+            - def_td
+            - fgm_0_19
+            - int
+            - pts_allow_0
+            - pts_allow_21_27
+            - idp_fum_rec
+            - rec_2pt
+            - rec
+            - xpm
+            - idp_sack
+            - st_td
+            - def_st_fum_rec
+            - def_st_td
+            - sack
+            - fum_rec_td
+            - rush_2pt
+            - rec_td
+            - pts_allow_35p
+            - pts_allow_14_20
+            - rush_yd
+            - fgm_yds_over_30
+            - pass_yd
+            - pass_td
+            - rush_td
+            - def_2pt
+            - fum_lost
+            - yds_allow_200_299
+            - safe
+          properties:
+            yds_allow_400_449:
+              type: number
+            yds_allow_550p:
+              type: number
+            yds_allow_100_199:
+              type: number
+            pass_2pt:
+              type: number
+            pass_int:
+              type: number
+            fgmiss:
+              type: number
+            rec_yd:
+              type: number
+            idp_safe:
+              type: number
+            xpmiss:
+              type: number
+            fgm_30_39:
+              type: number
+            yds_allow_450_499:
+              type: number
+            blk_kick:
+              type: number
+            pts_allow_7_13:
+              type: number
+            fgm_20_29:
+              type: number
+            fgm_40_49:
+              type: number
+            pts_allow_1_6:
+              type: number
+            yds_allow_300_349:
+              type: number
+            yds_allow_500_549:
+              type: number
+            def_st_ff:
+              type: number
+            yds_allow_0_100:
+              type: number
+            yds_allow_350_399:
+              type: number
+            pts_allow_28_34:
+              type: number
+            idp_blk_kick:
+              type: number
+            idp_int:
+              type: number
+            fgm_50p:
+              type: number
+            fum_rec:
+              type: number
+            def_td:
+              type: number
+            fgm_0_19:
+              type: number
+            int:
+              type: number
+            pts_allow_0:
+              type: number
+            pts_allow_21_27:
+              type: number
+            idp_fum_rec:
+              type: number
+            rec_2pt:
+              type: number
+            rec:
+              type: number
+            xpm:
+              type: number
+            idp_sack:
+              type: number
+            st_td:
+              type: number
+            def_st_fum_rec:
+              type: number
+            def_st_td:
+              type: number
+            sack:
+              type: number
+            fum_rec_td:
+              type: number
+            rush_2pt:
+              type: number
+            rec_td:
+              type: number
+            pts_allow_35p:
+              type: number
+            pts_allow_14_20:
+              type: number
+            rush_yd:
+              type: number
+            fgm_yds_over_30:
+              type: number
+            pass_yd:
+              type: number
+            pass_td:
+              type: number
+            rush_td:
+              type: number
+            def_2pt:
+              type: number
+            fum_lost:
+              type: number
+            yds_allow_200_299:
+              type: number
+            safe:
+              type: number
+        roster_positions:
+          type: array
+          items:
+            type: string
+        previous_league_id:
+          type: string
+          minLength: 1
+        name:
+          type: string
+          minLength: 1
+        metadata: {}
+        loser_bracket_id: {}
+        league_id:
+          type: string
+          minLength: 1
+        last_read_id: {}
+        last_pinned_message_id:
+          type: string
+          minLength: 1
+        last_message_time:
+          type: number
+        last_message_text_map:
+          type: object
+        last_message_text:
+          type: string
+          minLength: 1
+        last_message_id:
+          type: string
+          minLength: 1
+        last_message_attachment:
+          type: object
+          required:
+            - type
+            - data
+          properties:
+            type:
+              type: string
+              minLength: 1
+            data:
+              type: array
+              uniqueItems: true
+              minItems: 1
+              items:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    minLength: 1
+                  transactions_by_roster:
+                    type: object
+                    properties:
+                      '3':
+                        type: object
+                        required:
+                          - user
+                          - status_updated
+                          - status
+                          - drops
+                          - dropped_picks
+                          - dropped_budget
+                          - adds
+                          - added_picks
+                          - added_budget
+                        properties:
+                          user:
+                            type: object
+                            required:
+                              - user_id
+                              - is_bot
+                              - display_name
+                            properties:
+                              user_id:
+                                type: string
+                                minLength: 1
+                              is_bot:
+                                type: boolean
+                              display_name:
+                                type: string
+                                minLength: 1
+                              avatar: {}
+                          status_updated:
+                            type: number
+                          status:
+                            type: string
+                            minLength: 1
+                          settings: {}
+                          seq: {}
+                          metadata: {}
+                          drops:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              type: object
+                              properties:
+                                years_exp:
+                                  type: number
+                                team:
+                                  type: string
+                                  minLength: 1
+                                status:
+                                  type: string
+                                  minLength: 1
+                                sport:
+                                  type: string
+                                  minLength: 1
+                                position:
+                                  type: string
+                                  minLength: 1
+                                player_id:
+                                  type: string
+                                  minLength: 1
+                                number:
+                                  type: number
+                                news_updated:
+                                  type: number
+                                last_name:
+                                  type: string
+                                  minLength: 1
+                                injury_status: {}
+                                first_name:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - years_exp
+                                - team
+                                - status
+                                - sport
+                                - position
+                                - player_id
+                                - number
+                                - news_updated
+                                - last_name
+                                - first_name
+                          dropped_picks:
+                            type: array
+                            items:
+                              type: object
+                          dropped_budget:
+                            type: array
+                            items:
+                              type: object
+                          adds:
+                            type: array
+                            items:
+                              type: object
+                          added_picks:
+                            type: array
+                            items:
+                              type: object
+                          added_budget:
+                            type: array
+                            items:
+                              type: object
+                    required:
+                      - '3'
+                required:
+                  - type
+        last_author_is_bot:
+          type: boolean
+        last_author_id:
+          type: string
+          minLength: 1
+        last_author_display_name:
+          type: string
+          minLength: 1
+        last_author_avatar: {}
+        group_id: {}
+        draft_id:
+          type: string
+          minLength: 1
+        company_id: {}
+        bracket_id: {}
+        avatar: {}
+      required:
+        - total_rosters
+        - status
+        - sport
+        - shard
+        - settings
+        - season_type
+        - season
+        - scoring_settings
+        - roster_positions
+        - previous_league_id
+        - name
+        - league_id
+        - last_pinned_message_id
+        - last_message_time
+        - last_message_text_map
+        - last_message_text
+        - last_message_id
+        - last_message_attachment
+        - last_author_is_bot
+        - last_author_id
+        - last_author_display_name
+        - draft_id
+    Roster:
+      description: ''
+      type: object
+      properties:
+        taxi: {}
+        starters:
+          type: array
+          items:
+            type: string
+        settings:
+          type: object
+          required:
+            - wins
+            - waiver_position
+            - waiver_budget_used
+            - total_moves
+            - ties
+            - ppts_decimal
+            - ppts
+            - losses
+            - fpts_decimal
+            - fpts_against_decimal
+            - fpts_against
+            - fpts
+            - division
+          properties:
+            wins:
+              type: number
+            waiver_position:
+              type: number
+            waiver_budget_used:
+              type: number
+            total_moves:
+              type: number
+            ties:
+              type: number
+            ppts_decimal:
+              type: number
+            ppts:
+              type: number
+            losses:
+              type: number
+            fpts_decimal:
+              type: number
+            fpts_against_decimal:
+              type: number
+            fpts_against:
+              type: number
+            fpts:
+              type: number
+            division:
+              type: number
+        roster_id:
+          type: number
+        reserve:
+          type: array
+          items:
+            type: object
+        players:
+          type: array
+          items:
+            type: object
+        player_map: {}
+        owner_id:
+          type: string
+          minLength: 1
+        metadata:
+          type: object
+          required:
+            - record
+          properties:
+            record:
+              type: string
+              minLength: 1
+        league_id:
+          type: string
+          minLength: 1
+        co_owners: {}
+      required:
+        - starters
+        - settings
+        - roster_id
+        - reserve
+        - players
+        - owner_id
+        - metadata
+        - league_id

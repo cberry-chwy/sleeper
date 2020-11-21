@@ -45,6 +45,10 @@ tasks.withType<KotlinCompile> {
     }
 }
 
+tasks.withType<KotlinCompile> {
+    dependsOn("openApiGenerate")
+}
+
 openApiGenerate {
     // https://github.com/OpenAPITools/openapi-generator/blob/master/docs/generators/kotlin-spring.md
     generatorName.set("kotlin")
@@ -54,15 +58,11 @@ openApiGenerate {
     configOptions.put("packageName", "com.cberry.sleeper.generated.client")
 }
 
-//
-//tasks.register("cleanGeneratedSource", org.gradle.api.tasks.Delete::class) {
-//    delete("$projectDir/src/main/kotlin/com/cberry/sleeper/generated/")
-//}
-//
-//getTasksByName("clean", false)
-//    .firstOrNull()
-//    ?.dependsOn("cleanGeneratedSource")
-//
-//tasks.withType<KotlinCompile> {
-//    dependsOn("openApiGenerate")
-//}
+tasks.register("cleanGeneratedSource", org.gradle.api.tasks.Delete::class) {
+    delete("$projectDir/src/main/kotlin/com/cberry/sleeper/generated/")
+}
+
+getTasksByName("clean", false)
+    .firstOrNull()
+    ?.dependsOn("cleanGeneratedSource")
+
