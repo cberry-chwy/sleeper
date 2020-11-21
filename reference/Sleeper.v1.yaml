@@ -67,7 +67,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/League'
+                type: array
+                items:
+                  $ref: '#/components/schemas/League'
       operationId: get-leagues
       description: Get leagues for given user by sport and year
   '/v1/league/{league_id}':
