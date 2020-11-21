@@ -1,0 +1,79 @@
+openapi: 3.0.0
+info:
+  description: Sleeper API
+  title: Sleeper
+  version: '1.0'
+  contact:
+    name: Craig
+    email: rjbcc58@gmail.com
+servers:
+  - url: 'https://api.sleeper.app'
+    description: Local Host
+tags:
+  - name: Sleeper
+    description: Sleeper API
+paths:
+  '/v1/user/{username}':
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Sleeper
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      operationId: get-user
+      description: 'Get user '
+    parameters:
+      - schema:
+          type: string
+        name: username
+        in: path
+        required: true
+components:
+  schemas:
+    User:
+      description: ''
+      type: object
+      properties:
+        verification: {}
+        username:
+          type: string
+          minLength: 1
+        user_id:
+          type: string
+          minLength: 1
+        token:
+          type: string
+        solicitable:
+          type: string
+        real_name:
+          type: string
+        phone:
+          type: string
+        pending: {}
+        notifications: {}
+        is_bot:
+          type: boolean
+        email:
+          type: string
+        display_name:
+          type: string
+          minLength: 1
+        deleted: {}
+        data_updated: {}
+        currencies: {}
+        created: {}
+        cookies: {}
+        avatar:
+          type: string
+          minLength: 1
+      required:
+        - username
+        - user_id
+        - is_bot
+        - display_name
+        - avatar
