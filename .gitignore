@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Generated ###
+src/main/kotlin/com/cberry/sleeper/generated/**

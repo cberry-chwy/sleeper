@@ -8,6 +8,8 @@ plugins {
     id("org.openapi.generator") version "4.3.0"
 }
 
+val kotlinVersion = "1.4.10"
+
 group = "com.cberry"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
@@ -25,6 +27,11 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
+
+    implementation( "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
+    implementation( "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
+    implementation( "com.squareup.moshi:moshi-kotlin:1.9.2")
+    implementation( "com.squareup.moshi:moshi-adapters:1.9.2")
 }
 
 tasks.withType<Test> {
@@ -37,3 +44,22 @@ tasks.withType<KotlinCompile> {
         jvmTarget = "11"
     }
 }
+
+openApiGenerate {
+    // https://github.com/OpenAPITools/openapi-generator/blob/master/docs/generators/kotlin-spring.md
+    generatorName.set("kotlin")
+    inputSpec.set("$rootDir/reference/Sleeper.v1.yaml")
+    outputDir.set("$rootDir/src/main/kotlin/com/cberry/sleeper/generated/")
+}
+//
+//tasks.register("cleanGeneratedSource", org.gradle.api.tasks.Delete::class) {
+//    delete("$projectDir/src/main/kotlin/com/cberry/sleeper/generated/")
+//}
+//
+//getTasksByName("clean", false)
+//    .firstOrNull()
+//    ?.dependsOn("cleanGeneratedSource")
+//
+//tasks.withType<KotlinCompile> {
+//    dependsOn("openApiGenerate")
+//}

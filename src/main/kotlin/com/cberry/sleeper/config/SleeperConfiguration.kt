@@ -10,6 +10,6 @@ class SleeperConfiguration {
 
     @Bean
     fun getHttpClient(): OkHttpClient {
-        val client = OkHttpClient()
+        return OkHttpClient()
     }
 }
