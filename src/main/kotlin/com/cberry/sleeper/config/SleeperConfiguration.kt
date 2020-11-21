@@ -1,6 +1,6 @@
 package com.cberry.sleeper.config
 
-import okhttp3.OkHttpClient
+import org.openapitools.client.apis.SleeperApi
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration
 class SleeperConfiguration {
 
     @Bean
-    fun getHttpClient(): OkHttpClient {
-        return OkHttpClient()
+    fun getHttpClient(): SleeperApi {
+        return SleeperApi()
     }
 }

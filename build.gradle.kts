@@ -50,7 +50,10 @@ openApiGenerate {
     generatorName.set("kotlin")
     inputSpec.set("$rootDir/reference/Sleeper.v1.yaml")
     outputDir.set("$rootDir/src/main/kotlin/com/cberry/sleeper/generated/")
+
+    configOptions.put("packageName", "com.cberry.sleeper.generated/")
 }
+
 //
 //tasks.register("cleanGeneratedSource", org.gradle.api.tasks.Delete::class) {
 //    delete("$projectDir/src/main/kotlin/com/cberry/sleeper/generated/")
